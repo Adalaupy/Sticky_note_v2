@@ -1,0 +1,338 @@
+[
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-104",
+        "Title": "ExpressRoute",
+        "Content": "- between Azure and on-premise<br> - through private connection\n <dd>\t-> reliable</dd> \n <dd>\t-> fast</dd> \n <dd>\t-> high security</dd> \n <dd>\t-> consistent latency</dd> <br> - common to have more than 1 connection    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-104",
+        "Title": "Subnet mask:",
+        "Content": "for each IP, there are Network and Host part<br> - number of network is determined by Subnet mask:\n <dd>\t-> from left to right of subnet, if digit = 1 then network, after that is host</dd> \n <dd>\t-> IP address:      172.16.1.0    (10101100.00010000.00000001.00000000)</dd> \n <dd>\t-> Subnet mark:     255.255.224.0 (11111111.11111111.11100000.00000000)</dd> \n <dd>\t-> from above case: <mark>first 19 digit = network, last 13 digits = host</mark></dd> <br> <br> - purpose for separate them:\n <dd>\t-> easy management</dd> \n <dd>\t-> route can quickly search the specific IP    </dd> "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-104",
+        "Title": "Class of Subnet",
+        "Content": "Class A: 255.0.0.0<br> <br> Class B: 255.255.0.0<br> <br> Class C: 255.255.255.0<br> <br> - Class A is better for large company as more number of host can be provided    "
+    },
+    {
+        "Category": "Coding",
+        "SubCategory": "Python",
+        "Title": "bat call venv + python",
+        "Content": "@echo off<br> <br> call .\\Material\\my_env\\Scripts\\activate.bat<br> <br> start python Material\\main.py<br> <br> timeout /t 10<br> <br> start http://127.0.0.1:5000<br> <br> exit    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "5 kinds of temporal windowing function",
+        "Content": "<b>1. TumblingWindow(minute, 1) : </b><br> - reading value for each 1 minute, non-overlapping<br> <br> <b>2. HoppingWindow(second, 60, 30) : </b><br> - read every 30 seconds and 60 seconds for each read<br> <br> <b>3. SlidingWindow(minute, 1) + having count(*) >3  : </b><br> - read for 10 seconds before a event,  if each event have recorded by three times, then alert<br> <br> <b>4. SessionWindow(second, 20, 60) : </b><br> - record 20 seconds if one event occur, if meet one more event, then  extend 20 second for this trigger, but no more than 60 seconds for each recording<br> <br> <b>5. System.Timestamp() (Snapshot) : </b><br> - record only for the event occur<br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions\">More Info</a>    "
+    },
+    {
+        "Category": "Other",
+        "SubCategory": "Data Engineering",
+        "Title": "SCD Type",
+        "Content": "SCD TYPE1: UPDATE<br> <br> SCD TYPE2: INSERT NEW RECORD<br> <br> SCD TYPE3: ANOTHER COLUMN TO STORE PREVIOUS VALUE    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "SQL vs Lake database in Azure",
+        "Content": "sql database:<br> - table  = physical table<br> - external table : cache of data in data lake with metadata which updated on row data will not reflected on it<br> <br> <br> <br> lake database:<br> - managed table: have a parquet file in data lake's synapse folder, if delete this table, the parquet file also dropped<br> - external table: path of the raw data in data lake<br> - the changes on the raw data in data lake will reflected on both managed and external table    "
+    },
+    {
+        "Category": "Other",
+        "SubCategory": "SQL",
+        "Title": "SQL Log",
+        "Content": "BEGIN TRY SET @lineno = 1/0 END TRY BEGIN CATCH SET @msg =  'line ' + cast(ERROR_LINE() as varchar(10) ) +'  ' + convert(varchar, getdate(), 109)   END CATCH RAISERROR (@msg, 0, 1) WITH NOWAIT    "
+    },
+    {
+        "Category": "Other",
+        "SubCategory": "VS Code",
+        "Title": "Edit all occurrences ",
+        "Content": "shortcut for edit all the occurrences at the same time<br> <br> \u201cCTRL + SHIFT + L\u201d    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-900",
+        "Title": "Summary of Azure Network",
+        "Content": "<pre><br> +----------------------------+------------------------------------------------------------------------+<br> | Virtual Network Gateway    | - site-to-site                                                         |<br> |                            | - point-to-site                                                        |<br> |                            | - network-to-network                                                   |<br> |                            | (Can choose VPN/ExpressRoute, Route/Policy based )                     |<br> +----------------------------+------------------------------------------------------------------------+<br> | Local Network gateway      | on-premise -> Virtual network (Public Internet)                        |<br> +----------------------------+------------------------------------------------------------------------+<br> | ExpressRoute               | on-premise -> Virtual network (Private + high speed)                   |<br> +----------------------------+------------------------------------------------------------------------+<br> | gateway subnet             | - subnet within Azure Virtual Network                                  |<br> |                            | - for hosting virtual network gateway (used together)                  |<br> +----------------------------+------------------------------------------------------------------------+<br> | Network Security Gateway   | - filter traffic flow in and out                                       |<br> | (NSGs)                     | - based on IP, Port, Protocol                                          |<br> |                            | - separately for each Virtual Network and subnet                       |<br> +----------------------------+------------------------------------------------------------------------+<br> | Azure Firewall             | - more advanced                                                        |<br> |                            | - app-level, URL, traffic filtering                                    |<br> |                            | - centralized management and policy enforcement across Virtual Network |<br> +----------------------------+------------------------------------------------------------------------+<br> | Service endpoints          | - directly from Virtual Network to Azure Services                      |<br> |                            | - without exposing the traffic to public internet                      |<br> +----------------------------+------------------------------------------------------------------------+<br> | application security group | - group VMs                                                            |<br> | (ASGs)                     | - define network security police                                       |<br> |                            | - on top of NSGs                                                       |<br> +----------------------------+------------------------------------------------------------------------+<br> | Peering                    | - connect Virtual Network and Microsoft's global network               |<br> +----------------------------+------------------------------------------------------------------------+<br> <br> <br> Azure Traffic Manager profile<br> - DNS-based traffic load balancer<br> e.g:<br> 1. the web application located in 3 region(east us,west us and europe),<br> 2. if client request this website, the traffic manager profile detect the geographic location of client (Europe)<br> 3. route the client to Europe Endpoints as it is nearest<br> <br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-900",
+        "Title": "Azure storage services",
+        "Content": "<pre><br> +---------------+------------------------------------------------------+<br> | Blob storage  | - all file format                                    |<br> |               | - massive                                            |<br> +---------------+------------------------------------------------------+<br> | file storage  | - standard Server Message Block(SMB) -> Linux/ macOS |<br> |               | - Network File System(NFS) protocols -> Window       |<br> |               | - shared access                                      |<br> +---------------+------------------------------------------------------+<br> | Queue storage | - storing large of message                           |<br> |               | - https/http                                         |<br> +---------------+------------------------------------------------------+<br> | Disk storage  | - manage disk                                        |<br> |               | - used with Azure VM                                 |<br> +---------------+------------------------------------------------------+<br> </pre><br> <br> Storage tier:\n <dd>\t-> Hot access tier: accessed frequently</dd> \n <dd>\t-> Cool access tier: infrequently and store for at least 30 days</dd> \n <dd>\t-> Archive access tier: rarely access and store for at least 180 days, flexible latency requirement    </dd> "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-900",
+        "Title": "Azure Monitor tool",
+        "Content": "<pre><br> +------------------------------------+-----------------------------------------------------------------+<br> | Azure Monitor                      | - monitor apps,OS,resource,subscription,tenant and log data     |<br> |                                    | - visualize data                                                |<br> |                                    | - run query on the data gathered and analyze                    |<br> |                                    | - alert for performance, availability and usage                 |<br> |                                    | - integrate with logic app/export APIs and auto remediate       |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Azure Advisor                      | - improve performance and achieve process efficiency            |<br> |                                    | - optimize resource/services and reduce cost                    |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Azure Service Health               | - alert for outage incident and events that impact the services |<br> |                                    | - root cause analyses (RCAs)                                    |<br> |                                    | - how to avoid services interruption                            |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Trust Center                       | - a website                                                     |<br> |                                    | - security standards for protecting data                        |<br> |                                    | - how implement security,privacy,compliance in Azure Product    |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Azure Arc                          | - manage hybrid and multi-cloud environment                     |<br> |                                    | - use familiar Azure services                                   |<br> |                                    | - continue use traditional ITOps                                |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Azure Resource Manage and Template | - JSON file define what to deploy                               |<br> |                                    | - include network,VM,storage,account etc                        |<br> |                                    | - repeat deploy multiple environment                            |<br> +------------------------------------+-----------------------------------------------------------------+<br> | Microsoft Defender for Cloud       | - defend both Azure, On-premise and other clouds                |<br> |                                    | - detect anomalous behavior                                     |<br> |                                    | - detect and respond to security threats in real-time           |<br> |                                    | - compliance assessments and recommendation                     |<br> |                                    | - protect sensitive data access                                 |<br> +------------------------------------+-----------------------------------------------------------------+<br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-900",
+        "Title": "Azure Support plan",
+        "Content": "<pre><br> <br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> |                      |      Basic      |      Developer    |     Standard     |   Professional direct  |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> |                      | Request support |                    Purchase support                           |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> |         Price        |        -        |   $29 per month   |  $100 per month  |     $1000 per month    |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> |  third party support |        -        |                             Yes                               |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> |     24/7 support     |        -        | email only during |                     Yes                   |<br> |    (email + phone)   |                 |   business hour   |                                           |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> | response time by     |        -        | Minimal: 8        | Minimal: 8       | Minimal: 4             |<br> | Case Severity        |                 |                   | Moderate: 4      | Moderate: 2            |<br> |                      |                 |                   | Critical: 1      | Critical: 1            |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> | Architecture support |        -        |          General guidance            | from ProDirect manager |<br> +----------------------+-----------------+-------------------+------------------+------------------------+<br> <br> </pre><br> <br> <br> Only Professional direct:<br> - support API<br> - Operation support(Service review + advise)<br> - Training<br> - proactive guidance<br> <br> All:<br> - 24/7 help resource (video,documentation, community support)<br> - ability to submit as many support ticket as you need<br> - Azure advisor<br> - Azure health status and notification    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "AZ-900",
+        "Title": "Azure App Service pricing:",
+        "Content": "<pre><br> <br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> |                              | Free   | Shared      | Basic       | Standard   | Premium    | Isolated   |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Disk Space                   | 1 GB   | 1 GB        | 10 GB       | 50 GB      | 250 GB     | 1 TB       |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Web,mobile,API app           | 10     | 100         |                        unlimited                   |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | max instance                 | -      | -           | up to 3     | up to 10   | up to 30*  | up to 100  |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Auto Scale                   | -      | -           |             |                 support              |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Hybrid Connectivity          | -      | -           |                                                    |<br> +------------------------------+        |             |                                                    |<br> | Virtual Network Connectivity |        |             |                         support                    |<br> +------------------------------+        |             |                                                    |<br> | Private Endpoints            |        |             |                                                    |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Compute Type                 |    Shared            |               Dedicated               | Isolated   |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> | Pay as you go price          | Free   | $0.013/hour | $0.075/hour | $0.10/hour | $0.20/hour | $0.40/hour |<br> +------------------------------+--------+-------------+-------------+------------+------------+------------+<br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "Data Engineering",
+        "Title": "Reason of Using Elastic pool for SQL database",
+        "Content": "Suppose you have 2 databases:<br> <br> DB1: maximum usage is 20DTU, mostly spend on morning<br> DB2: maximum usage is 20DTU, mostly spend at night<br> <br> - each database require 20 DTU to avoid downtime, then total 40 DTU is required<br> - one database under heavy load and other one is under light loads<br> - Combine them into single pool, the maximum usage maybe still lower than 40 DTU    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "Network",
+        "Title": "Concept of SD WAN",
+        "Content": "Method of connectivity between sites (WAN Types):<br> - Broadband<br> - Metro-ethernet<br> - T1<br> - MPLS<br> - LTE<br> <br> <br> Why SD-WAN:<br> 1. Companies have more than one sites<br> 2. using which kinds of connectivity is based on location/availability<br> 3. each site have its combination of connectivity (private/public)<br> 4. each connection is managed separately<br> 5. SD-WAN combine all the separated network into one encrypted network<br> 6. all different network become a single entity and controlled in a single point    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "Network",
+        "Title": "Virtual WAN",
+        "Content": "<img src=\"https://learn.microsoft.com/en-us/azure/virtual-wan/media/sd-wan-connectivity-architecture/hybrid.png#lightbox\" width=60% ><br> - deploying VNet on the edge of a region (Hubs)<br> - connect on-premise to Hub<br> - fastest route to Azure<br> <br> <br> <b>interconnection of Virtual WAN with SD-WAN</b><br> <br> 1. Direct Interconnect mode<br> - SD WAN CPE (right) connect to Virtual Hub directly via IPsec<br> - Branches connected via private SD-WAN<br> <br> <br> 2. Direct Interconnect model with NVA-in-VWAN-hub<br> - Branch connect to NVA in virtual hub<br> <br> <br> 3. Direct Interconnect model with NVA-in-VWAN-hub<br> - Branch connect to NVA in virtual hub<br> <br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/virtual-wan/sd-wan-connectivity-architecture\">Here for more information</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Delta Lake table",
+        "Content": "Delta Lake table<br> <br> - easiest way to create is save a dataframe via pyspark<br> <pre><br> <code><br> <br> from delta.tables import *<br> from pyspark.sql.functions import *<br> <br> # Create a deltaTable object<br> deltaTable = DeltaTable.forPath(spark, delta_table_path)<br> <br> # Update the table (reduce price of accessories by 10%)<br> deltaTable.update(<br> condition = \"Category == 'Accessories'\",<br> set = { \"Price\": \"Price * 0.9\" })<br> <br> </code><br> </pre><br> <br> Querying a previous version of a table<br> <pre><br> <code><br> df = spark.read.format(\"delta\").option(\"versionAsOf\", 0).load(delta_table_path)<br> df = spark.read.format(\"delta\").option(\"timestampAsOf\", '2022-01-01').load(delta_table_path)<br> </code><br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Synapse Analytics dedicated SQL Pool Distribution",
+        "Content": "- Azure Synapse Analytics dedicated SQL Pool use Massively parallel architecture<br> - data distributied across a pool of nodes<br> <br> - supported distribution:<br> \t<br> - Hash: \n <dd>-> one of the columns is designated as the distribution column</dd> \n <dd>-> query performance on large fact tables</dd> \n <dd>-> more than 2 GB</dd> \n <dd>-> frequent insert, update, and delete operations</dd> <br> <br> <br> - Round-robin: \n <dd>-> distributed equally, no specific key</dd> \n <dd>-> suitable for temp table/ less join key</dd> <br> <br> <br> - Replicated: \n <dd>-> copy of table stored on each compute node</dd> \n <dd>-> for improving loading speed</dd> \n <dd>-> less than 2 GB compressed</dd> \n <dd>-> well for dimension tables</dd> \n <dd>-> less update,insert and delte    </dd> "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Load file into Data warehouse",
+        "Content": "SQL code:<br> <br> <pre><br> <code><br> COPY INTO dbo.StageProducts<br> (ProductID, ProductName, ProductCategory, Color, Size, ListPrice, Discontinued)<br> FROM 'https://mydatalake.blob.core.windows.net/data/stagedfiles/products/*.parquet'<br> WITH<br> (<br> FILE_TYPE = 'PARQUET',<br> MAXERRORS = 0,<br> IDENTITY_INSERT = 'OFF'<br> );<br> <br> </code><br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "SQL ranking window function",
+        "Content": "1. ROW_NUMBER: return ordinal position without duplication<br> 2. RANK: return ranked position, same rank with same value then skip the next rank, e.g. 1,2,2,4<br> 3. DENSE_RANK: same as RANK but don't skip the next one after duplication<br> 4. NTILE: divide rows into specific number of group, e.g. NTILE(3)<br> <br> <br> Approximate count:<br> - APPROX_COUNT_DISTINCT()<br> - a maximum error rate of 2% with 97% probability<br> - use it when precise count is not required    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "SQL Merge",
+        "Content": "\"Merge\" statement in SQL<br> - perform upsert<br> - Insert new Record + update existing Record<br> <br> <a href=\"https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql?view=sql-server-ver16\">Sample Code</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "rebuild table index",
+        "Content": "- After loading new data into the data warehouse<br> <code><br> -- Rebuild indexes<br> ALTER INDEX ALL ON dbo.DimProduct REBUILD<br> <br> -- Update statistics<br> CREATE STATISTICS productcategory_stats<br> ON dbo.DimProduct(ProductCategory);<br> <br> </code>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Manage workloads in Azure Synapse Analytics",
+        "Content": "1) Workload Classification<br> - simpliest and most common way: load and query\n <dd>\t-> load: insert, update, delete</dd> \n <dd>\t-> query: select</dd> <br> - subclassification of query:\n <dd>\t-> cube refreshes</dd> \n <dd>\t-> dashboard queries</dd> \n <dd>\t-> ad-hoc queries</dd> <br> - statement which do not require resource are not able to classfied\n <dd>\t-> DBCC</dd> \n <dd>\t-> BEGIN</dd> \n <dd>\t-> COMMIT</dd> \n <dd>\t-> ROLLBACK</dd> <br> <br> 2. Workload importance<br> - influence the order of a request get access to resource<br> - 5 levels:\n <dd>\t-> low</dd> \n <dd>\t-> below_normal</dd> \n <dd>\t-> normal</dd> \n <dd>\t-> above_normal</dd> \n <dd>\t-> high</dd> <br> <br> 3. Workload isolation<br> - reserves resources for a workload group<br> - define the amount of resources that are assigned per request<br> - workload groups are a mechanism to apply rules, such as query timeout, to requests<br> <br> <br> Step:<br> 1. create a workload Group called CEODemo<br> 2. create a Workload Classifier called CEODreamDemo<br> 3. check what happen<br> <br> <a href=\"https://github.com/ctesta-oneillmsft/kaito/blob/master/demos/module2/README.md\">All SQL Code can be found Here</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Valid trigger of Azure Data Factory or Azure Synapse Analytics",
+        "Content": "1. Schedule trigger: wall-clock schedule<br> 2. Tumbling window trigger: periodic interval + retaining state<br> 3. Event-based trigger: response to an event<br> - Storage event trigger: arrival/deletion of a file<br> - Custom event trigger: handles custom articles in Event Grid<br> <br> <br> Tumbling window trigger vs Schedule trigger:<br> - Schedule trigger: \"fire and forget\" behavior<br> - tumbling window trigger: waits for the triggered pipeline run to finish    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Dynamic data masking",
+        "Content": "Default: <br> - full mask according to the data type<br> - auditing, encryption, row level security<br> <br> Email: <br> - aXXX@XXX.com<br> <br> Random: <br> - use on any numeric type ~> <mark>'random('1,12)' </mark><br> <br> Custom String: <br> - exposes the first and last letters<br> - 555.123.1234 into 5XXXXXXX ~> <mark>'partial(1,\"XXXXXXX\",0)'</mark><br> <br> Datetime: <br> - 'datetime(\"Y\")', 'datetime(\"M\")') <mark>--Month</mark>, datetime(\"m\")') <mark>--minutes</mark><br> <br> <a href= \"https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver16\">More Info</a><br> <br> !! the masked value still can be guessed by using \"where condition\" to select    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Diagnose the long time taken by SQL pool in Azure Synapse",
+        "Content": "How:<br> - Click -> Monitor -> Metrics -> Scope<br> <br> Metrics:<br> 1. Cache hit percentage<br> 2. Cache used percentage<br> <br> <br> Monitor for transactions that have rolled back<br> -  sys.dm_pdw_nodes_tran_database_transactions    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Azure Purview role",
+        "Content": "Reader:<br> - read all content except for scan bindings<br> <br> Curator:<br> - read all content except for scan bindings<br> - can edit information<br> <br> Administrator:<br> - only can <mark>manage aspect of scanning data</mark> into Purview<br> - cannot read and write access to content beyond scanning task    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "SQL in Azure",
+        "Content": "1. SQL Sever<br> 2. SQL Mangaged Instance<br> 3. SQL Database\n <dd>\t-> elastic pool</dd> \n <dd>\t-> single database</dd> <br> 4. SQL database Server<br> 5. Synapase Analytics\n <dd>\t-> SQL Database</dd> \n <dd>\t-> dedicated SQL Pool</dd> <br> <br> Notes:<br> - You need (4) before (5)<br> - sql Database in (5) <mark>!=</mark> (3)<br> - (1) and (2) can connect (3) to (5)<br> - you need <mark> Self-hosted Integration runtime </mark> if (3) - (5) need to connect (1) and (2)    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Cluster Mode of Databrick",
+        "Content": "1. Standard clusters<br> - multiple users with no isolation between users<br> - also recommended for single user<br> - Python, SQL, R, and Scala<br> <br> 2. High Concurrency clusters<br> - fine-grained sharing for maximum resource utilization and minimum query latency<br> - SQL, Python, and R<br> - Scala is not possible to run user code in separate process<br> <br> 3. Single Node cluster<br> - no workers and run spark job on the driver mode    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "collect metrics, events, app log msg for Databricks",
+        "Content": "To send application log from Databricks to Log Analytics<br> <br> Steps:<br> 1. Configure the Databricks cluster to Databricks monitoring library<br> 2. Build spark-listeners-loganalytics-1.0-SNAPSHOT.jar JAR file<br> 3. Create Dropwizard gauges or counters in your application code<br> <br> Library: Azure Databricks Monitoring Library<br> Workspace: Log Analytics workspace    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Log for Databricks Cluster",
+        "Content": "1. Cluster Event Log:<br> - cluster life-cycle events<br> - e.g. creation, termination, configuration edits<br> <br> 2. Apache Spark driver and worker log:<br> - for debugging<br> - 3 outputs<br> <br> 3. Cluster init-script logs:<br> - debugging init scripts    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Case: Monitor of Data Factory for specific activities",
+        "Content": "Case: monitor an Azure data factory by using the Monitor & Manage app and required to identify the status and duration of activities <mark> * (reference a table in a source database) </mark><br> <br> <br> Step:<br> 1) generate a User property on all activities <mark> for activity Type: Source </mark><br> - e.g. choose specific activity type so it become a entity to monitor<br> <br> 2) add \"Source\" user property to Activity Runs table<br> <br> 3) publish the pipelines<br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/data-factory/monitor-visually#monitor-activity-runs\">More Info</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Case: Streaming data to JSON ",
+        "Content": "Case: Received data from Azure Event Hubs and ingested into Data Lake every 5 minutes into JSON file, one dataset per hour per devicesType<br> <br> File pattern:<br> /{deviceType}/in/{YYYY}/{MM}/{DD}/{HH}/{deviceID}_{YYYY}{MM}{DD}HH}{mm}.json<br> <br> Ans:<br> 1. Parameter: <mark>@trigger().output.windowStartTime</mark><br> - from tumbling window trigger, give the hour of complete data<br> - \"@trigger().startTime\" is not correct since it's for schedule trigger<br> <br> 2. Naming Pattern: <mark>/{YYYY}/{MM}/{DD}/{HH}_{deviceType}.json</mark><br> - DevicesType + Hour for each dataset<br> <br> 3. Copy behavior: <mark>Merge File</mark><br> - data ingested every 5 mins but aggregated in per hour    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Case: Data factory encrypt ",
+        "Content": "Case: You have an Azure Data Factory version 2 (V2) resource named Df1. Df1 contains a linked service. You have an Azure Key vault named vault1 that contains an encryption key named key1. You need to encrypt Df1 by using key1. What should you do first?<br> <br> <br> Ans:<br> - Remove the linked service from Df1<br> <br> Reason:<br> - <mark>A customer-managed key can only be configured on an empty data Factory.</mark> The data factory can't contain any resources such as linked services, pipelines and data flows. It is recommended to enable customer-managed key right after factory creation.    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Partition function for SQL",
+        "Content": "Example of Syntax:<br> - create partition function my_range(int) as range (left/right) for values (1,100,1000);<br> <br> <mark>if Left:</mark><br> partition_1: <= 1<br> partition_2: 1 - 100<br> partition_3: 101 - 1000<br> partition_4: > 1000<br> <br> <mark>if right:</mark><br> partition_1: < 1<br> partition_2: 2 - 99<br> partition_3: 100 - 999<br> partition_4: >= 1000    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Stream Analytics Functions",
+        "Content": "Example Syntax: select deviceID, reading, isfirst(mi,10) as First from output<br> <br> 1. AnomalyDetection_SpikeAndDip()<br> - kernel density estimation algorithm<br> <br> 2. AnomalyDetection_ChangePoint()<br> - Exchangeability Martingales algorithm<br> <br> 3. Isfirst()<br> - return 1 if it's the first event<br> <br> 4. Lag()<br> - return the previous event<br> <br> 5. Last()<br> - return most recent event<br> <br> <a href=\"https://learn.microsoft.com/en-us/stream-analytics-query/last-azure-stream-analytics\">More Info</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Data Discovery & Classification",
+        "Content": "- it's built into Azure SQL Database, Azure SQL Managed Instance, and Azure Synapse Analytics<br> <br> 1. Discovery and recommendations<br> - scan your database and identify column with sensitive data<br> <br> 2. Labeling:<br> - apply sensitivity-classification label to columns<br> <br> 3. Query result-set sensitivity:<br> - The sensitivity of a query result set is calculated in real time<br> <br> 4. Visibility:<br> - view database-classification state<br> <br> <br> To identify query that return confidential information as defined by company's data privacy regulations and the user who executed the queues<br> 1) sensitivity-classification labels applied to columns that contain confidential information<br> 2) audit logs sent to a Log Analytics workspace    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Optimize Partition strategy",
+        "Content": "To optimize the partitioning, there should be 1 million rows for each Partition + distribution, and there are 60 nodes for distributions .<br> <br> Example of calculating the optimized number of partition:<br> <br> Case:<br> - Contain sales data for 20,000 products<br> - use hash distribution on a column named Product_ID<br> - Contain 2.4 billions records for the years 2019,2020<br> <br> Calculation:<br> let x be the number of partitions.<br> 2.4 billions of total records/(60 nodes * x) = 1 million<br> x = 40    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Resource Class of Synapse Analytics",
+        "Content": "- manage memory and concurrency<br> <br> - configure resources for your query by:\n <dd>\t-> setting limit on the number of queries that run concurrently</dd> \n <dd>\t-> limit on compute-resource assigned</dd> <br> <br> Size of resource class:<br> - smaller: reduce maximum memory per query and increase concurrency<br> - larger: increase maximum memory per query and reduce concurrency<br> <br> Type of resource class:<br> - static: same amount of memory regardless of the current performance level, ideal for data volume is known and constant<br> - dynamic: allocate variable amount of memory depending on current service level, ideal for growing data set    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Views vs Materialized View vs Cache",
+        "Content": "1. View<br> - No extra storage is required<br> - slow since result generated each times it used<br> <br> 2. Materialized View<br> - extra storage is required<br> - fast as pre-processed<br> - updated as data is added to the underlying tables<br> - allow data changes in the base tables<br> <br> 3. Result set cache<br> - high concurrency and fast response<br> - from repetitive queries<br> - against static data<br> - the form of cache requesting query must match with the query that produced the cache    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Manage transaction log file",
+        "Content": "1. Shrink a log file<br> - DBCC SHRINKFILE<br> <br> 2. Monitor log space<br> - sys.dm_db_log_space_usage<br> - sys.database_files    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Info for Databricks",
+        "Content": "- Shared Access Keys are not supported<br> - Spark Core API support for R, SQL, Python, Scala, and Java<br> - Notebook format: DBC<br> - jar activity require Databricks    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Info for Azure Synapse Analytics",
+        "Content": "- auto encrypted for all connection<br> - check service availability: <mark>Diagnose and solve problems</mark><br> - supports an <mark>eight-hour</mark> recovery point objective (RPO)<br> - use <mark>\"dm_pdw_nodes_os_performance_counters\"</mark> to count log file size<br> - <mark>Transparent Data Encryption (TDE)</mark> helps protect against the threat of malicious activity by encrypting and decrypting your data at rest (not specific column)<br> - <mark>Contained database users</mark>: database-level authentication<br> - <mark>a managed identity</mark> is required when your storage account is attached to a VNet<br> - check shows all counts for all partitions of all indexes and heaps + data skew: <mark>sys.dm_pdw_nodes_db_partition_stats</mark><br> - Find data skew for a distributed table: DBCC PDW_SHOWSPACEUSED('dbo.FactInternetSales');<br> - check status of Spark: <mark>Monitor in Synapase, Apache Spark applications </mark>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Info for Data Factory",
+        "Content": "- \"an annotation\" is used to label each of the pipeline<br> - it has \"data wrangling\" while <mark>Synapase</mark> doesn't<br> - need \"flatten\" transformation for JSON into tabular dataset<br> - Maximum number of activites per pipeline: 40    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Info for Azure Stream Analytics",
+        "Content": "- get the best performance using Advanced Message Queuing Protocol (AMQP) to publish msg to Event Hub<br> - Event Hub default 4 partitions<br> - if Event Hub goes offline, the event will not immediately lost<br> - Dashboard are used to view the key health metrics of your Stream Analytics jobs<br> - implement complex stateful business logic: <mark>JavaScript user-defined aggregates (UDA) </mark><br> - best practices = 6 SUs for no partition, e.g. if 10 partition, then 6*10 SUs<br> - Geofencing function support low latency real-time geofencing computing<br> - cannot encrypt since no data<br> <br> Error message and its meaning<br> 1. Runtime Errors > 0: The job can receive the data but is generating errors while processing the query<br> 2. Input Events is not > 0: The data serialization format and data encoding are incorrect <br> 3. Data Conversion Errors > 0 and climbing:  datatypes of some of the fields in the event might not match expected format    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Reduce latency of Stream Analytics",
+        "Content": "Case: The query of Stream Analytics query return a result set contains 10,000 distinct value for a column named ClusterID, and you discover high latency, how to reduce the latency<br> <br> 1. Scale out the query by using partition By<br> - divide data into subset<br> - can write and consume different partitions in parallel<br> <br> <br> 2. Increase the number of streaming units<br> - Streaming units means computing resource    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Event Hub",
+        "Content": "<b>Publisher</b><br> - send event to Event Hub<br> - via HTTPS (good for low volume) / AMQP Protocol (good for high volume with high performance)<br> <br> <br> <b>Partition</b><br> - Partitioned consumer pattern\n <dd>\t-> parallel lane and allow overtake if one lane is in congestion</dd> <br> - still available after the event read<br> - event with same Partition_Key are stored in same partition<br> <br> <br> <b>Consumer</b><br> - read event from Event Hub<br> - Only AMQP accepted<br> <br> <br> <b>Consumer Group</b><br> - event can be consume by different Applications<br> <br> <br> <b>Way to consume event</b><br> - Direct receiver\n <dd>\t-> need take of consumer responsibility like threat safety</dd> \n <dd>\t-> require a level of knowledge to write the receivers</dd> <br> - Event Processor Host\n <dd>\t-> the simplest way to consume event    </dd> "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Explore file storage",
+        "Content": "1. delimited text file<br> - csv, tsv<br> <br> <br> 2. JavaScript Object Notation(JSON)<br> <br> <br> 3. Extensible Markup Language(XML)<br> - <../><br> <br> <br> 4. Binary Large Object(BLOB)<br> - binary data(1,0)<br> <br> <br> 5. Optimized file formats<br> - Avro -> row-based<br> - ORC (columns)<br> - Parquet (columnar data)    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Element of CosmosDB",
+        "Content": "- cost: Request Unit (RUs)<br> - backup every 4 hous<br> <br> Level: Database Account ~> Database ~> Container ~> Items<br> <br> How to mapped with API-specific entities:<br> <br> <pre><br> <br> +------------+-----------+-----------+------------+--------------+-------+<br> |            | NoSQL     | Cassandra | MongoDB    | Gremlin      | Table |<br> +------------+-----------+-----------+------------+--------------+-------+<br> | databases  | Database  | Keyspace  | Database   | Database     | NA    |<br> +------------+-----------+-----------+------------+--------------+-------+<br> | containers | Container | Table     | Collection | Graph        | Table |<br> +------------+-----------+-----------+------------+--------------+-------+<br> | items      | Item      | Row       | Document   | Node or edge | Item  |<br> +------------+-----------+-----------+------------+--------------+-------+<br> <br> </pre>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Consistency levels in Azure Cosmos DB",
+        "Content": "<img src=\"https://learn.microsoft.com/en-us/azure/cosmos-db/media/consistency-levels/five-consistency-levels.png\" width=80% ><br> <br> <b>Strong</b><br> - return most recent committed version<br> <br> <b>Bounded staleness</b><br> - strong consistent in the same region<br> - replication lag between regions<br> - the data replicated in order<br> <br> <b>Session</b><br> - consistent and current data for same Session<br> - receive data later for other Session<br> <br> <b>Consistent prefix</b><br> - guarantee the consistency and order of the write<br> - data is not current<br> <br> <br> <b>Eventual</b><br> - no guarantee for the order and how long the data replicated<br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels\">More Info</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Transparent data encryption (TDE)",
+        "Content": "- encrypt at rest<br> - protect Azure SQL Database, Azure SQL Managed Instance, and Azure Synapse Analytics<br> - against the threat of malicious offline activity by encrypting data<br> - real-time encryption and decryption of the database, associated backups, and transaction log files<br> - TDE protector can be <mark>service-managed certificate and customer managed </mark><br> <br> <br> Server managed:<br> - default setting<br> - encrypted entire database by a summetric key called Database Encryption Key (DEK)<br> <br> <br> Customer-managed:<br> - Bring Your Own Key(BYOK)<br> - store in Key-Vault    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "level security",
+        "Content": "Column:<br> - GRANT SELECT ON Membership(MemberID, FirstName, LastName, Phone, Email) TO TestUser;<br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/column-level-security\">Here</a><br> <br> Row:<br> 1. create a \"security\" schema<br> 2. create function<br> 3. create security policy and add above function to a table<br> 4. grant \"select\" permission on Function to user<br> <br> <a href=\"https://learn.microsoft.com/en-us/sql/relational-databases/security/row-level-security?toc=%2Fazure%2Fsynapse-analytics%2Fsql-data-warehouse%2Ftoc.json&bc=%2Fazure%2Fsynapse-analytics%2Fsql-data-warehouse%2Fbreadcrumb%2Ftoc.json&view=azure-sqldw-latest&preserve-view=true\">Here</a>    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "Access Control in Azure Data Lake Storage Gen1",
+        "Content": "two kinds of access control lists<br> - Access: control access to an object, both files and folders jave<br> - Default: a template associated with folder, determine the access ACLs for any child items under folder, files do not have default ACLs<br> <br> <br> Permission:<br> 1. Read: \"read\" for file, \"Read + Execute\" for folder<br> 2. Write: \"write + append\" for file, \"write + execute\" for Folder<br> 3. Execute: \"no meaning\" for file, \"traverse\" the child item of folder    "
+    },
+    {
+        "Category": "Azure",
+        "SubCategory": "DP-203",
+        "Title": "config Azure monitor for SQL database",
+        "Content": "Step:<br> <br> 1. create action group<br> 2. use all security operations as condition<br> 3. use all SQL database as resource<br> <br> <a href=\"https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-processing-rules?tabs=portal\">More Info</a>    "
+    },
+    {
+        "Category": "Coding",
+        "SubCategory": "React",
+        "Title": "React create vite ",
+        "Content": "npm install -g create-react-app<br> create-react-app --version<br> cd C:\\Users\\ada_lau\\Documents\\Learn<br> mkdir NewReact2<br> cd NewReact2<br> npm create vite@latest<br> <br> ProjectName: .<br> packagename: xxxx<br> Select a framework: React<br> Select a variant: JavaScript+ SWC<br> <br> npm i<br> npm run dev    "
+    }
+]
