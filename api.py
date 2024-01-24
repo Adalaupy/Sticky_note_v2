@@ -24,7 +24,7 @@ app.add_middleware(
 
 
 
-with open(r'backend\sourcedata.json','r', encoding='utf-8') as jsonfile:
+with open(r'sourcedata.json','r', encoding='utf-8') as jsonfile:
             
     data = json.load(jsonfile)
 
@@ -32,7 +32,7 @@ with open(r'backend\sourcedata.json','r', encoding='utf-8') as jsonfile:
 
 def SaveToJson():
     
-    with open(r'backend\destination.json','w', encoding='utf-8') as jsonfile:
+    with open(r'destination.json','w', encoding='utf-8') as jsonfile:
          
         json.dump(data,jsonfile,indent=4)
 
