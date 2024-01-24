@@ -39,6 +39,7 @@ def SaveToJson():
 
 
 
+
 @app.get("/", tags=["root"])
 async def read_root() -> dict:
         
@@ -85,7 +86,7 @@ async def update_notes(notes: dict) -> dict:
  
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    uvicorn.run("api:app", host="127.0.0.1", port=8000, reload=True)
+#     uvicorn.run("api:app", host="127.0.0.1", port=8000, reload=True)
 
