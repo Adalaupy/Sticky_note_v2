@@ -1,0 +1,3 @@
+npm install --save react-rte -f
+npm install html-react-parser -f
+npm install react-icons --save -f
