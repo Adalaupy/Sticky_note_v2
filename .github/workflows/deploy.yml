@@ -20,9 +20,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v2
-        with:
-          install-command: 'npm install --legacy-peer-deps'
+        run: npm install --legacy-peer-deps'
 
           
       - name: Build project
